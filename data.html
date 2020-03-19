@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <div id="app">
+            <input type="text" v-model="info">
+            <p>我的学号为{{info}}</p>
+            <p>我的电话为{{tel}}</p>
+            <p>我在{{arr[1]}}班</p>
+            <p>我的年龄是{{stu.age}}</p>
+            <p>{{time}}</p>
+       
+    </div>
+    <script src="./js/vue.js"></script>
+    <script>
+        let vm=new Vue({
+            el:"#app",
+            data:{
+                info:'201806370541',
+                tel:110,
+                arr:[1,2,3,4,5],
+                stu:{
+                    name:'Junfeng Yan',
+                    job:'student',
+                    age:21
+                },
+                time: new Date()
+                //显示当前时间
+            },
+            beforeCreate() {
+                console.log('beforeCreate')
+            },
+            created() {
+                console.log('created')
+            },
+            beforeMount() {
+                console.log('beforeMount')
+            },
+            mounted() {
+                console.log('mounted')
+            },
+            beforeUpdate() {
+                console.log('beforeUpdate')
+            },
+            updated() {
+                console.log('updated')
+            },
+            beforeDestroy() {
+                console.log('beforeDestroy')
+            },
+            destroyed() {
+                console.log('destroyed')
+            }
+        })
+    </script>
+</body>
+</html>

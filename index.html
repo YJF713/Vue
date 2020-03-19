@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Vue demo1</title>
+    <style>
+        .computed{
+            margin: 30px 10px;
+        }
+    </style>
+</head>
+<body>
+    <!-- view视图 -->
+    <div id="myApp">
+        <p>----数据双向绑定------</p>
+        <input type="text" v-model="msg">
+        <span>{{msg}}</span>
+        <p>------计算器-------</p>
+        <div class="computed">
+            <input type="text" v-model="num1" >
+            +
+            <input type="text" v-model="num2" >
+            =
+            <span>{{Number(num1)+Number(num2)}}</span>
+            <!-- 强制类型转换。系统默认  +  是连接符  -->
+        </div>
+
+        <div class="computed">
+            <input type="text" v-model="num3" >
+            -
+            <input type="text" v-model="num4" >
+            =
+            <span>{{num3-num4}}</span>
+        </div>
+
+        <div class="computed">
+            <input type="text" v-model="num5" >
+            *
+            <input type="text" v-model="num6" >
+            =
+            <span>{{num5*num6}}</span>
+        </div>
+
+        <div class="computed">
+            <input type="text" v-model="num7" >
+            /
+            <input type="text" v-model="num8" >
+            =
+            <span>{{num7 / num8}}</span>
+        </div>
+       
+    </div>
+    <script id="template" type="x-template">
+        <!-- 必须有一个根元素 -->
+        <div>
+            <p>{{temp}}</p>
+            <input type="text" v-model="temp">
+        </div>
+    </script>
+    <script src="./js/vue.js"></script>
+    <script>
+    //vm逻辑  viewModel
+    let vm=new Vue({
+        // 可以有两个el  但是没必要。
+        el:'#myApp',
+        data:{
+            msg:'hello vue',
+            num1:0,
+            num2:0,
+            num3:0,
+            num4:0,
+            num5:0,
+            num6:0,
+            num7:0,
+            num8:1,
+            temp:'I am Template'
+        },
+        template:`#template`
+    }) 
+    </script>
+</body>
+</html>

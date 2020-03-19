@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <div id="app">
+        <p>{{time}}</p>
+        <p v-once>{{age}}</p>
+        <input type="text" v-model="age">
+        <p >{{!isOk?1:2}}</p>
+        <h2 v-html="tagInfo"></h2>
+       <img v-bind:src="pic" alt="">
+       <a v-bind:href="page">xxxx</a>
+       <p style="color: red;">实现功能：修过输入框，图片随着变化</p>
+        <input type="text" v-model="picsrc">
+        <p><img v-bind:src="picName+picsrc+picForamt" alt=""></p>
+        
+    </div>
+
+    <script src="./js/vue.js"></script>
+    <script>
+        let vm=new  Vue({
+            el:"#app",
+            data:{
+                time:new Date(),
+                msg:'Connot read property of undefined',
+                age:18,
+                tagInfo:'<p style=color:red>我是标签文本</p>',
+                isOk:true,
+                pic:'./img/patient_pic.jpg',
+                picName:'./img/pic',
+                picForamt:'.jpg',
+                picsrc:1,
+                page:'xxxx.html',
+            },
+               
+            beforeCreate() {
+                
+            },
+            created() {
+                
+            },
+            beforeMount() {
+                
+            },
+            mounted() {
+                if(true){
+                this.page='xxx'
+               }else{
+                   this.page='xxx'
+               }
+            },
+            beforeUpdate() {
+              this.time=new Date();
+              this.picsrc<4?this.picsrc++:this.picsrc=1
+                // this.picsrc=''
+            },
+            updated() {
+                
+            },
+            beforeDestroy() {
+                
+            },
+            destroyed() {
+                
+            },
+        })
+    </script>
+</body>
+</html>
