@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>登陆</title>
+    <style>
+        .login-content{
+            width: 300px;
+            padding-bottom: 50px;
+            margin: 0 auto;
+            border: 1px solid #999;
+            border-radius: 8px;
+            text-align: center;
+        } 
+        .item{
+            margin-top: 20px;
+            position: relative;
+        }
+        .item .error{
+            /* 错误提示 */
+            color: red;
+            position: absolute;
+            bottom: -20px;
+            left: 80px;
+        }
+        
+        /* 字体和输入框对齐 */
+        .item label{
+            display: inline-block;
+            width: 52px;
+            text-align: right;
+        }
+        /* 去除输入框边框，留下边框 */
+        .item input{
+            display: inline-block;
+            font-size: 16px;
+            border-bottom: 1px solid #333;
+            border-top: 1px solid transparent;
+            border-left: 1px solid transparent;
+            border-right: 1px solid transparent;
+            outline: none;
+            /* 去除本身效果 */
+        }
+        .btn{
+            width: 100px;
+            height: 40px;
+            background-color: #56a5f1;
+            color: whitesmoke;
+            outline: none;
+            border: none;
+            border-radius: 6px;
+            cursor: pointer;
+            /* 鼠标悬停 */
+        }
+       
+    </style>
+</head>
+<body>
+    <div id="app">
+        <div class="login-content">
+            <h1>欢迎登陆</h1>
+            <div class="item">
+                <label>手机号</label>
+                <input type="text" autofocus
+                    v-model="phone" v-on:blur="checkPhone">
+                <!-- autofocus使光标自动移入 -->
+                <span class="error">{{phoneErr}}</span>
+            </div>
+            <div class="item">
+                <label>密码</label>
+                <input type="password" v-model="pwd"
+                v-on:blur="checkPwd">
+                <!-- blur鼠标移出 -->
+                <span class="error">{{pwdErr}}</span>
+            </div>
+            <div class="item">
+                <button class="btn" v-on:click="login">登陆</button>
+            </div>
+            
+        </div>
+    </div>
+    <script src="./js/vue.js"></script>
+    <script>
+        let vm =new Vue({
+            el:'#app',
+            data:{ 
+               phone:'',
+               pwd: '',
+               phoneErr:'',
+               pwdErr:''
+            },
+            methods: {
+                login(){
+                   //判断手机号和密码是否正确
+                   if (this.phoneErr==''&& this.pwdErr=='') {
+                    //从localStorage中获取用户数据。保证数组类型
+                    if (localStorage.getItem('userInfo')) {
+                        this.userArr=JSON.parse(localStorage.getItem('userInfo'))
+                    }else{
+                        this.userArr = []
+                    }
+
+                    this.userArr.forEach((item,index) => {
+                        console.log(item, index);
+                        if(true) {
+                            if(item.phone == this.phone && item.pwd == this.pwd) {
+                            location.href = './directive.html'
+                            }else {
+                            this.phoneErr = '手机号和密码不匹配'
+                            }
+                        }else {
+                            // 没找到这个手机号
+                            this.phoneErr = '该手机号尚未注册'
+                        }
+                            
+                     });
+                 }
+                },
+                //校验手机号
+                checkPhone(){
+                    // /^ 开始  \d{10}  十个数字  $/  结束
+                    if (!(/^1\d{10}$/.test(this.phone))) {
+                        this.phoneErr='请重新输入手机号'
+                    }else{
+                        this.phoneErr=''
+                    }
+                },
+                //校验密码
+                checkPwd(){
+                    let lg=this.pwd.length
+                    if (lg<6) {
+                        this.pwdErr='请重新输入密码'
+                    }else{
+                        this.pwdErr=''
+                    }
+                }
+            }
+        })
+    </script>
+</body>
+</html>

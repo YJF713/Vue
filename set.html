@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>倒计时跳转</title>
+</head>
+<body>
+    <div id="add" style="margin: 20px auto;width: 1000px;text-align: center;">
+        {{msg}}
+    </div>
+    <script src="./js/vue.js"></script>
+    <script>
+        let vm=new Vue({
+            el:'#add',
+            data:{
+                msg:''
+            },
+            mounted() {
+            // mounted:function(){}
+            this.show()
+            },
+            methods: {
+             show(){
+                let i=3;
+                // setInterval() 方法会不停地调用函数直到 clearInterval() 被调用或窗口被关闭
+                let timer=setInterval(()=>{
+                    this.msg=`等待${i--}s,你将会看见全世界最帅的人`;
+                    if(i==-1){
+                        clearInterval(timer);
+                        this.msg=`屏幕中最帅的的出现！`;
+                        document.body.style.background='black'
+                        add.style.color='red';
+                        add.style.margin='0 auto';
+                    }
+                },1000)
+            }
+        }
+
+        })
+    </script>
+</body>
+</html>

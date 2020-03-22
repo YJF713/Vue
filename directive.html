@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>v-on指令</title>
+</head>
+<body>
+    <div id="app">
+        <input type="text" v-model="money">
+        <button v-on:click ="money++">充值</button>
+
+        <p>ta喜欢不喜欢你？</p>
+        <span>{{isLove?'':'不'}}喜欢</span>
+        <button v-on:click="isLove=!isLove">再掰一瓣</button>
+
+        <p>最帅的爱豆：{{bfArr[bfArr.length-1]}}</p>
+        <input type="text" v-model="bfName" v-on:change="addIdol"  :data-qwer="money">
+
+    </div>
+    <script src="./js/vue.js"></script>
+    <script>
+        let vm =new Vue({
+            el:'#app',
+            data:{
+               money:999,
+               isLove:true,
+               bfArr:["朱一龙","肖战","易烊千玺"],
+               bfName:''
+            },
+            methods: {
+                // addIdol :function(){}
+                addIdol(){
+                    // js中获取需要加  this
+                   this.bfArr.push(this.bfName);
+                   this.bfName=''
+             }   
+            }
+        })
+    </script>
+</body>
+</html>

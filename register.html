@@ -1,0 +1,169 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>注册</title>
+    <style>
+        .login-content{
+            width: 360px;
+            padding-bottom: 50px;
+            margin: 0 auto;
+            border: 1px solid #999;
+            border-radius: 8px;
+            text-align: center;
+        } 
+        .item{
+            margin-top: 20px;
+            position: relative;
+        }
+        .item .error{
+            /* 错误提示 */
+            color: red;
+            position: absolute;
+            bottom: -20px;
+            left: 130px;
+        }
+        
+        /* 字体和输入框对齐 */
+        .item label{
+            display: inline-block;
+            width: 80px;
+            text-align: right;
+        }
+        /* 去除输入框边框，留下边框 */
+        .item input{
+            display: inline-block;
+            font-size: 16px;
+            border-bottom: 1px solid #333;
+            border-top: 1px solid transparent;
+            border-left: 1px solid transparent;
+            border-right: 1px solid transparent;
+            outline: none;
+            /* 去除本身效果 */
+        }
+        .btn{
+            width: 100px;
+            height: 40px;
+            background-color: #56a5f1;
+            color: whitesmoke;
+            outline: none;
+            border: none;
+            border-radius: 6px;
+            cursor: pointer;
+            /* 鼠标悬停 */
+        }
+       
+    </style>
+</head>
+<body>
+    <div id="app">
+        <div class="login-content">
+            <h1>欢迎注册</h1>
+            <div class="item">
+                <label>手机号</label>
+                <input type="text" autofocus
+                    v-model="phone" v-on:blur="checkPhone">
+                <!-- autofocus使光标自动移入 -->
+                <span class="error">{{phoneErr}}</span>
+            </div>
+            <div class="item">
+                <label>输入密码</label>
+                <input type="password" v-model="pwd"
+                v-on:blur="checkPwd">
+                <!-- blur鼠标移出 -->
+                <span class="error">{{pwdErr}}</span>
+            </div>
+            <div class="item">
+                <label>确认密码</label>
+                <input type="password" v-model="pwd1"
+                v-on:blur="checkPwd1">
+                <!-- blur鼠标移出 -->
+                <span class="error">{{pwdErr1}}</span>
+            </div>
+            <div class="item">
+                <button class="btn" v-on:click="register">注册</button>
+            </div>
+            
+        </div>
+    </div>
+    <script src="./js/vue.js"></script>
+    <script>
+        let vm =new Vue({
+            el:'#app',
+            data:{ 
+               phone:'',
+               pwd: '',
+               pwd1: '',
+               phoneErr:'',
+               pwdErr:'',
+               pwdErr1:'',
+               userArr:[]
+            },
+            methods: {
+                register(){
+                   //判断手机号和密码是否正确
+                   if (this.phoneErr==''&& this.pwdErr==''&&this.pwdErr1=='') {
+                       let userInfo={
+                           phone:this.phone,
+                           pwd:this.pwd
+                       }
+                    //    获取用户信息，如果没有信息，就给他一个空数组。
+                       if (localStorage.getItem('userInfo')) {
+                        this.userArr=JSON.parse(localStorage.getItem('userInfo'));
+                       }else{
+                           this.userArr=[]
+                       }
+                       console.log(this.userArr);
+                     //  在老数据中新增当前注册用户的数据
+                       this.userArr.push(userInfo);
+                    //    debugger
+                      this.userArr =JSON.stringify(this.userArr);//将值转换为字符串
+                       localStorage.setItem('userInfo',this.userArr);//存 本地存储
+                       return
+                       location.href='./login.html'
+                   }
+                },
+                //校验手机号
+                checkPhone(){
+                    // /^ 开始  \d{10}  十个数字  $/  结束
+                    if (!(/^1\d{10}$/.test(this.phone))) {
+                        this.phoneErr='请重新输入手机号'
+                    }else{
+                        this.phoneErr=''
+                    }
+                    return
+                    //此处应该发送请求查询手机号是否被占用，以jq为例
+                    $.ajax({
+                        url:'xxx',
+                        type:'post',
+                        data:{
+
+                        },
+                        success:function(){
+                            alert("该手机号被注册,请重新输入");
+                        }
+                    })
+                },
+                //校验密码
+                checkPwd(){
+                    let lg=this.pwd.length
+                    if (lg<6) {
+                        this.pwdErr='请重新输入密码'
+                    }else{
+                        this.pwdErr=''
+                    }
+                },
+                checkPwd1(){
+                    if (this.pwd != this.pwd1) {
+                        this.pwdErr1='请确保俩次输入一致'
+                    }else{
+                        this.pwdErr1=''
+                    }
+                },
+            
+            }
+        })
+    </script>
+</body>
+</html>
