@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>style</title>
+    <style>
+    html{
+        font-size: 12px;
+    }
+    .active{
+        text-decoration: underline;
+    }
+    .error{
+        color: red;
+    }
+   .transition{
+       color: tomato;
+   }
+   .transition:hover{
+       color: teal;
+   }
+
+    </style>
+</head>
+<body>
+    <div id="app">
+        <h1>通过数组语法控制class&控制style</h1>
+        <p v-bind:class="[activeClass,errorClass]">数组语法控制class的值</p>
+
+        <p v-bind:class="[isActive?'active':'',errorClass]">
+            2.数组语法控制class的值-- 三元表达式
+            <button v-on:click="changeClass">toggle</button>
+        </p>
+
+        <p v-bind:class="[{active:isActive},errorClass]">
+            3.数组语法控制class的值-- 数组套对象
+            <button v-on:click="changeClass">toggle</button>
+        </p>
+        <hr>
+        <hr>
+        <!-- style -->
+        <input type="text" v-model="size">
+        <p :style="{fontSize:size+'px' ,color:fontColor}">通过v-bind控制</p>
+        <p :style="styleObject">通过v-bind控制 --接耦</p>
+        <p :style="[styleObject,otherStyleObj]">通过v-bind控制style -数组语法</p>
+        <p></p>
+      
+    </div>
+    <script src="./js/vue.js"></script>
+    <script>
+        let vm=new Vue({
+            el:'#app',
+            data:{
+                activeClass:'active',
+                errorClass:'error',
+                isActive:true,
+                size:'20',
+                fontColor:'#56a5f1',
+                styleObject:{
+                    color:'#56a5f1',
+                    fontSize:'13px'
+                },
+                otherStyleObj:{
+                    fontWeight:'900',
+                    fontStyle:'italic'
+                },
+                time:'2s'
+            },
+            methods: {
+                changeClass:function(){
+                    this.isActive = !this.isActive
+                }
+            },
+        })
+    </script>
+</body>
+</html>

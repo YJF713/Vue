@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>计算属性</title>
+    <!-- 将?name=yan&age=19 写入地址栏运行 -->
+    <style>
+        .name{
+            display: inline-block;
+            width: 100px;
+        }
+        .price{
+            display: inline-block;
+            /* width: 50px; */
+        }
+        .num{
+            display: inline-block;
+            /* width: 30px; */
+        }
+    </style>
+</head>
+<body>
+    <div id="app">
+        <!-- 字符串倒置   先转换成数组,再倒置,再转换成字符串 -->
+        <p>{{message.split('').reverse().join('')}}</p>
+
+        <p>{{reverseMsg}}</p>
+        <hr>
+        <span class="name">{{carInfo[0].name}}</span>
+        <span class="price">{{carInfo[0].price}}</span>
+        <span class="num">{{carInfo[0].num}}</span>
+        <br>
+        <span class="name">{{carInfo[1].name}}</span>
+        <span class="price"><input type="text" v-model="carInfo[1].price"></span>
+        <span class="num">{{carInfo[1].num}}</span>
+        <hr>
+        <span>1computed:总计:{{totalPrice}}</span>
+        <span>2computed:总计:{{totalPrice}}</span>
+        <br>
+        <span>1fn:总计:{{totalPrice1()}}</span>
+        <span>2fn:总计:{{totalPrice1()}}</span>
+
+        
+      <span>你的年龄是：{{getUserAge}}</span>
+    </div>
+<script src="./js/vue.js"></script>
+<script>
+    let vm=new Vue({
+        el:'#app',
+        data:{
+           message:'郑州职业技术学院',
+           carInfo:[
+               {
+                   name:'mi 10',
+                   price:'3999',
+                   num:10
+               },
+               {
+                   name:'iphone se2',
+                   price:'2999',
+                   num:20
+               }
+           ],
+        //    userInfo:"?name=yan&age=19",
+           UserAge:0
+        },
+    //  计算属性.
+        computed: {
+            reverseMsg:function(){
+                return this.message.split('').reverse().join('')
+            },
+
+            totalPrice:function(){
+                console.log('computed');
+                let price =0;
+                this.carInfo.forEach(element => {
+                    price += element.price*element.num;
+            });
+            return price; 
+            },
+
+            // userInf:{ 
+            // //默认getter
+            //     get:function(){
+            //         return 1
+          
+            //     },
+            //setter
+            //     set:function(newVal){
+                // //新值的时候
+            //         let str =newVal.substring(1);
+            //         this.UserAge =str.split('$')[1].split('=')[1]
+            //     }
+               
+            // }
+            
+            getUserAge:function(){
+               
+                return location.search.substring(1).split('&')[1].split('=')[1];
+               
+            }
+        },
+        //函数 ()
+        methods: {
+            totalPrice1:function(){
+                console.log('fn');
+                let price =0;
+                this.carInfo.forEach(element => {
+                    price += element.price*element.num;
+            });
+            return price; 
+        }
+        },
+        
+    })
+</script>
+</body>
+</html>

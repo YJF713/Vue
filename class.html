@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>class</title>
+    <style>
+        .active{
+            text-decoration: overline;
+        }
+        .unactive{
+            text-decoration: line-through;
+        }
+        .text{
+            color: red;
+        }
+        .dawa{
+            color: red;
+        }
+    </style>
+</head>
+<body>
+    <div id="app">
+        <!-- 通过对象 -->
+        <p v-bind:class="'un'+class1">通过字符串拼接修改class</p>
+        
+        <p :class="{active:isActive}">通过obj修改class</p>
+        <button @click="isActive=!isActive">click</button>
+
+        <p :class="{'has-error':hasError}" class="text">通过obj修改class--class有中划线</p>
+        <button @click="hasError=!hasError">click</button>
+
+        <p :class="classObj" class="text">通过obj修改class--其中有固定的class  ：text</p>
+
+        <p :class="computedClassObj">通过obj修改class--统一计算</p>
+
+        <span :class="huluwaClass[0]">大娃</span>
+        <span :class="huluwaClass[1]">二娃</span>
+        <span :class="huluwaClass[2]">三娃</span>
+        <span :class="huluwaClass[3]">四娃</span>
+        <span :class="huluwaClass[4]">五娃</span>
+        <span :class="huluwaClass[5]">六娃</span>
+        <span :class="huluwaClass[6]">七娃</span>
+    </div>
+
+    <script src="./js/vue.js"></script>
+    <script>
+        let vm=new Vue({
+            el:'#app',
+            data:{
+                class1:'active',
+                isActive:true,
+                hasError:false,
+                classObj:{
+                    active:false,
+                    'has-error':true
+                },
+
+                huluwaClass:[
+                    'dawa','erwa','sanwa','siwa','wuwa','liuwa','qiwa'
+                ],
+
+
+            },
+            computed: {
+                computedClassObj:function(){
+                    //...计算
+                    return{
+                        active:false,
+                        'has-error':true
+                    }
+                }
+            },
+        })
+    </script>
+</body>
+</html>

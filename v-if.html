@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>v-if and v-for</title>
+</head>
+<body>
+    <div id="app">
+        <h1>内置指令</h1>
+        <h2>条件渲染指令</h2>
+        <p v-if="true">我会显示</p>
+        <p v-if="false">我会隐藏</p>
+        <hr>
+        <p v-if="isShow">
+            <span>星星</span>
+        </p>
+        <p v-else>
+            <span>我是备胎</span>
+        </p>
+        <button @click="isShow=!isShow">切换</button>
+        <hr>
+        <p v-if="gender=='nan'">
+            <span>教练，我要打篮球</span>
+        </p>
+        <p v-else-if="gender=='nv'">
+            <span>帮我清空购物车</span>
+        </p>
+        <p v-else>
+            <span>帮我买回泰国的票</span>
+        </p>
+        <input type="text" v-model="gender">
+        <hr>
+        <p>vue中的key属性</p>
+        <template v-if="type=='email'">
+          <label>邮箱登陆</label>
+          <input type="text" placeholder="请输入邮箱:" key="email-input">
+        </template>
+        <template v-else>
+            <label>手机号登陆</label>
+            <input type="text" placeholder="请输入手机号:" key="phone-input">
+        </template>
+        <button @click="changLoginType">切换登陆方式</button>
+        <hr>
+        <p v-show="isShow"></p>
+        <p v-show="!isShow"></p>
+        <p v-if="!isShow"></p>
+        <hr>
+        <span v-for="huluwa in huluwas">{{huluwa}}</span>
+        <div>
+            <img  v-for="img in imgs" 
+            :src="'./img/'+img+'.jpg'" width="60%">
+        </div>
+        <p v-for="cart in cartList" :class="cart.name">
+            <span>{{cart.name}}</span>  
+            <span>{{cart.price}}</span>  
+            <!-- <span v-for="i in cart">{{i}}</span> -->
+        </p>
+    </div>
+    <script src="./js/vue.js"></script>
+    <script>
+        let vm=new Vue({
+            el:'#app',
+            data:{
+                isShow:true,
+                gender:"nan",
+                type:'email',
+                huluwas:[
+                    '大娃',
+                    '二娃',
+                    '三娃',
+                    '四娃',
+                    '五娃',
+                    '六娃',
+                    '七娃'
+                ],
+                imgs:[
+                    'pic1',
+                    'pic2',
+                    'pic3',
+                    'pic4'
+                ],
+                cartList:[
+                    {
+                        name:'iphone',
+                        price:'9999'
+                    },
+                    {
+                        name:'mi 10',
+                        price:'7777'
+                    }
+                ]
+            },
+            methods: {
+                changLoginType(){
+                   this.type=='email'?this.type='phone':this.type='email'
+                  
+                }
+            },
+        })
+    </script>
+</body>
+</html>
