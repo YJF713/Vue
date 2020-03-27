@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>v-for</title>
+</head>
+<style>
+    .page{
+        display: inline-block;
+        border: solid 1px #ccc;
+        padding: 10px;
+        margin: 2px;
+       color: #666;
+       cursor: pointer;
+    }
+    .page:hover{
+        background-color: #56a5f1;
+        color: white;
+    }
+    .active{
+        text-decoration: underline;
+        /* 下划线 */
+    }
+    .active:hover{
+        cursor: not-allowed;
+        /* s鼠标禁用样式 */
+    }
+</style>
+<body>
+    <div id="app">
+        <h1>v-for的高级使用</h1>
+        <span v-for="(hero,index) in heros" :data-index="index">{{index+1}}.{{hero}} <br></span>
+        <hr>
+        <p>v-for遍历对象</p>
+        <p v-for="(val,key,index) in heroDetail">
+           {{index+1}}.{{key}}:{{val}}
+        </p>
+        <hr>
+        <p>v-for迭代整数</p>
+        <span v-for="num in 5">{{num}}</span>
+        <hr>
+        <h2>通过v-for模拟分页功能</h2>
+        <span v-show="currentPage!=1" class="page"  @click="changePage(--currentPage)">上一页</span>
+        <!-- :class="['page',{active:currentPage==num}]"      class="page"  :class={active:currentPage==num} -->
+        <span v-for="num in 5"  :class="['page',{active:currentPage==num}]" @click="changePage(num)">
+           {{num}}
+        </span>
+        <span v-show="currentPage!=5" class="page"  @click="changePage(++currentPage)">下一页</span>
+        <hr>
+        <span>前端工程师投送地：</span>
+        <span v-for="location in locationList"> {{location}}、</span><br>
+        <input type="text" v-model="val">
+        <button @click="aolige">奥里给</button>
+        <button @click="listSort">排序</button>
+        <button @click="listreverse">倒序</button>
+        <button @click="changeLen">修改数组长度</button>
+        <button @click="changeItem">替换</button>
+    </div>
+    <script src="./js/vue.js"></script>
+    <script>
+        let vm=new Vue({
+            el:'#app',
+            data:{
+                heros:[
+                    '露娜',
+                    '鲁班',
+                    '后裔',
+                    '小乔',
+                    '程咬金',
+                    '兰陵王'
+                ],
+                heroDetail:{
+                name:'露娜',
+                position:'mid',
+                type:'ap',
+                gender:'female'
+                },
+                //当前页
+                currentPage:1,
+                locationList:[
+                    '上海',
+                    '杭州',
+                    '深圳',
+                    '苏州',
+                    '广州',
+                    '深圳',
+                    '南京'
+                ],
+                val:''
+            },
+            methods: {
+                changePage(num){
+                    if(this.currentPage!==num){
+                        this.currentPage=num;
+                    }
+                },
+                aolige(){
+                    this.locationList.push(this.val);
+                    this.val='';
+                },
+                listSort(){
+                    this.locationList.sort()
+                },
+                listreverse(){
+                    this.locationList.reverse()
+                },
+                changeLen(){
+                    //修改数组长度。
+                    // this.locationList.length(6)
+                    this.locationList.splice(6)
+                },
+                changeItem(){
+                    // 利用索引改变值。
+                    // this.locationList[6]='荥阳';
+                    this.locationList.splice(6,1,'荥阳');
+                                        // 第六个  换1个 ，值      值>1  添加  值<1 删除
+                }
+                
+            }
+            
+        })
+    </script>
+</body>
+</html>
