@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>聊天界面</title>
+    <style>
+        #app{
+            width: 400px;
+            height: 600px;
+            border: 1px solid #666;
+            border-radius: 6px;
+        }
+        .content{
+            height: 400px;
+            overflow: auto;
+            padding: 10px;
+        }
+        .edit{
+            border-top: 1px solid #666;
+            height: 200px;
+            position: relative;
+        }
+        .msg{
+            display: block;
+            width: 95%;
+            margin-left: 2%;
+            height: 40px;
+            max-height: 150px;
+            outline: none;
+            /* overflow: auto; */
+            border: none;
+            
+        }
+        .btn{
+            width: 80px;
+            height: 40px;
+            border-radius: 6px;
+            background-color: #56a5f1;
+            color: white;
+            position: absolute;
+            bottom: 25px;
+            right: 5px;
+            outline: none;
+            cursor: pointer;
+            border: none;
+        }
+        .btn2{
+            right: 90px;
+        }
+        .my{
+            text-align: right;
+        }
+    </style>
+</head>
+<body>
+    <div id="app">
+        <div class="content">
+            <p v-for="msg in msgLogs" :class="{my:msg.role=='A',stu:msg.role=='B'}">
+                {{msg.content}}
+            </p>
+        </div>
+        <div class="edit">
+            <input type="text" v-model="info" class="msg" autofocus>
+            <button class="btn" @click="sendMsg">send A</button>
+            <button class="btn btn2" @click="sendOthMsg">send B</button>
+        </div>
+    </div>
+    <script src="./js/vue.js"></script>
+    <script>
+        let vm=new Vue({
+            el:'#app',
+            data:{
+                info:'',
+                msgLogs:[
+                    {
+                        content:'欢迎来到vue课堂',
+                        role:'A'
+                    },
+                    {
+                        content:'时刻准备着',
+                        role:'B'
+                    }
+
+                ]
+            },
+            methods: {
+                sendMsg(){
+                    let msg={
+                        content:this.info,
+                        role:'A'
+                    }
+                    this.msgLogs.push(msg);
+                    this.info='';
+                },
+                sendOthMsg(){
+                    let msg={
+                        content:this.info,
+                        role:'B'
+                    }
+                    this.msgLogs.push(msg);
+                    this.info='';
+                }
+            },
+        })
+    </script>
+</body>
+</html>
