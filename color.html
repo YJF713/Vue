@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>网站风格</title>
+    <style>
+        .websit{
+            width: 300px;
+            height: 300px;
+            background-color: #ccc;
+        }
+    </style>
+</head>
+<body>
+    <div id="app">
+        <!-- 点击按钮，更换网站风格 -->
+        <div class="websit" :style="{backgroundColor:thems}"></div>
+        <button @click="changeThems('blue')">blue</button>
+        <button @click="changeThems('pink')">pink</button>
+        <button @click="changeThems('green')">green</button>
+    </div>
+    <script src="./js/vue.js"></script>
+    <script>
+        let vm=new Vue({
+            el:'#app',
+            data:{
+               thems:'gray'
+            },
+            methods: {
+                changeThems(thems){
+                        this.thems=thems
+                }
+            },
+        })
+    </script>
+</body>
+</html>

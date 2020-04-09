@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>修饰符</title>
+</head>
+<body>
+    <div id="app">
+        <h1>修饰符</h1>
+        <!-- 正常情况下 small big -->
+        <!-- capture 优先处理内部元素触发的事件再交给内部。即打印 big  small-->
+        <div class="big" @click.capture="bigClick">
+            <div class="small" @click.stop="smallClick">click</div>
+            <!-- stop阻止冒泡事件，即打印 small -->
+        </div>
+        <div class="small" @click.once="bottomClick">click</div>
+        <!--once 只打印一次  -->
+        <input type="text" @keyup.13="enterUp">
+        <!-- 13表示enter 键 鼠标按下enter触发该事件 也可以写键名  -->
+        <br>
+        <span @click.ctrl="ctrlClick">修饰符</span>
+        <!-- ctrl +点击 触发 -->
+        <hr>
+        <input @keyup.ctrl.space="ctrlSpace">
+        <!-- ctrl + 空格+点击 触发 -->
+    </div>
+    <script src="./js/vue.js"></script>
+    <script>
+        let vm=new Vue({
+            el:'#app',
+            data:{
+                
+            },
+            methods: {
+                bigClick(){
+                    console.log('big')
+                },
+                smallClick(){
+                    console.log('small')
+                },
+                bottomClick(){
+                    console.log('bottom')
+                },
+                enterUp(){
+                    console.log('13')
+                },
+                ctrlClick(){
+                    console.log('111')
+                },
+                ctrlSpace(){
+                    console.log('666')
+                }
+
+            },
+        })
+    </script>
+</body>
+</html>

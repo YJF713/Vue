@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>表单绑定值</title>
+</head>
+<body>
+    <div id="app">
+        <h1>表单绑定值</h1>
+        <p>把v-model加在会变的值上面，例如：input、select。
+            当用户选择了值之后，v-model对应的变量会自动收集那些值。
+            只关心这个变量即可，不用操作DOM。
+        </p>
+        <p>单选</p>
+        <label>频道1：</label>
+        <input type="radio" v-model="radioCheck" :value="radioVal1">
+        <label>频道2：</label>
+        <input type="radio" v-model="radioCheck" :value="radioVal2">
+        <label>频道3：</label>
+        <input type="radio" v-model="radioCheck" :value="radioVal3">
+        <br>
+        <span>所选频道：{{radioCheck}}</span>
+        <hr>
+        <!-- 勾上显示值，未勾上显示另一个值 -->
+        <span>你的爱好：</span>
+        <label>唱：</label>
+        <input type="checkbox" v-model="checkboxCheck" :true-value="val1"
+        :false-value="val2">l
+        <span>你的爱好：{{checkboxCheck}}</span>
+        <hr>
+        <p>下拉选择器</p>
+        <label>收货地址：</label>
+        <select v-model="selectCheck">
+            <option v-for="(city,index) in selectArr"  :key="index"
+            :value="city.value">{{city.text}}</option>
+        </select>
+        <span>val: {{selectCheck.val}}</span>
+        <span>code: {{selectCheck.code}}</span>
+        <hr>
+        <h1>v-model的修饰符</h1>
+        <p>v-model指令的修饰符。用来控制数据同步的时机</p>
+        <!--v-madel.lazy 事件变成 chang  -->
+        <p>.lazy</p>
+        <input type="text" v-model.lazy="info1">
+        <p>{{info1}}</p>
+        <hr>
+        <p>.number</p>
+        <input type="text" v-model.number="info2">
+        <p>{{info2}}</p>
+        <hr>
+        <p>.trim</p>
+        <input type="text" v-model.trim="info3">
+        <p>{{info3}}</p>
+        <hr>
+    </div>
+    <script src="./js/vue.js"></script>
+    <script>
+        let vm=new Vue({
+            el:'#app',
+            data:{
+                radioVal1:'FM 1041',
+                radioVal2:'FM 881',
+                radioVal3:'FM 78.2',
+                radioCheck:'FM 1041',
+
+                val1:'sing',
+                val2:'singing',
+                checkboxCheck:'sing',
+
+                selectCheck:'',
+                selectArr:[
+                    {
+                        text:'京',
+                        value:{
+                            val:'京',
+                            code:'1'
+                        }
+                    },
+                    {
+                        text:'津',
+                        value:{
+                            val:'津',
+                            code:'2'
+                        }
+                    },
+                    {
+                        text:'沪',
+                        value:{
+                            val:'沪',
+                            code:'3'
+                        }
+                    },
+                    {
+                        text:'渝',
+                        value:{
+                            val:'渝',
+                            code:'1'
+                        }
+                    }
+                ],
+                info1:'',
+                info2:'',
+                info3:''
+            }
+        })
+    </script>
+</body>
+</html>

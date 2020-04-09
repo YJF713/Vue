@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>组件</title>
+</head>
+<body>
+    <div id="app">
+        <yjf></yjf>
+        <yjf-component></yjf-component>
+        <table>
+            <!-- 如果不用is的话，div直接跑到table外 -->
+            <tbody is="table-div"></tbody>
+        </table>
+        <btn-component></btn-component>
+        <btn-component></btn-component>
+        <btn-component></btn-component>
+    </div>
+    <script src="./js/vue.js"></script>
+    <script>
+        //   第一个组件。全局注册
+        Vue.component('yjf',{
+            // template替换
+            template:'<h1>大家好，我是闫俊风</h1>'
+        })
+        let child={
+            template:'<mark>2020-04-07</mark>'
+        }
+        let vm=new Vue({
+            el:'#app',
+            data:function(){
+                return{
+
+                }
+            },
+            components:{
+            //   第二个组件 局部注册   嵌套
+                'yjf-component':child,
+            //第三个组件，is属性
+                'table-div':{
+                    template:'<div>我是一个div，但是我在table中</div>'
+                },
+            //第四个组件
+                'btn-component':{
+                     template:
+                    // 必须有根元素
+                     `
+                     <div>
+                     <span>我是第四个组件</span>
+                     <button @click="num ++">{{num}}</button>
+                    </div>
+                     `,
+                    //  函数的返回值。独立
+                     data:function(){
+                        return {
+                            num:1
+                        }
+                     }
+                 } 
+
+            }
+        })
+    </script>
+</body>
+</html>

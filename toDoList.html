@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>备忘录</title>
+    <style>
+        #app{
+            width: 300px;
+            height: 500px;
+            background-color: #e4e4e4;
+            margin-left: 30px;
+            padding-left: 20px;
+        }
+    </style>
+</head>
+<body>
+    <div id="app">
+        <h3>ToDoList</h3>
+        <input type="text" v-model="txt">
+        <button @click="txtClick" >保存</button>
+        <br>
+        <div  v-for="(list,i) in lists">
+            <ul>
+                <li>{{list}}
+                    <button @click="dele(i)" >删除</button>
+                </li>
+            </ul>
+        </div>
+            
+        <button @click="delsAll">清空列表</button>
+        <hr>
+            <span>已完成：</span>
+            <ul v-for="del in dels">
+                <li>{{del}}</li>
+            </ul>
+    </div>
+    <script src="./js/vue.js"></script>
+    <script>
+        let vm=new Vue({
+            el:'#app',
+            data:{
+                lists:[
+                    '待办事件1',
+                    '待办事件2'
+                ],
+                dels:[],
+                txt:'',
+            },
+            methods: {
+                txtClick(){
+                    this.lists.push(this.txt)
+                },
+                dele(i){
+                    this.dels.push(this.lists[i])
+                    this.lists.splice(this.lists[i],1)
+                    // this.lists[i]='';    
+                },
+                delsAll(){
+                    // 将数组合并 再赋值给dels
+                    this.dels=this.dels.concat(this.lists);
+                     this.lists.splice(this.lists);
+                   
+                 
+                }
+            },
+        })
+    </script>
+</body>
+</html>

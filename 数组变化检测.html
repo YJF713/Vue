@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>数组变化检测</title>
+</head>
+<body>
+    <div id="app">
+        <span v-for="num in arr1">{{num}}</span>
+        <br>
+        <p v-for="phone in arr2">{{phone.name}}--{{phone.price}}</p>
+        <p>第一种情况：通过数组下标修改一整项.</p>
+        <p>第二种情况：通过length直接修改数组长度.</p>
+        <p>第一种解决方式：splice-------vm.arr1.splice(index,1,newValue)</p>
+        <p>第二种解决方式：Vue.set  ----Vue.set(vm.items, indexOfItem, newValue)或者
+            vm.$set------- vm.$set(vm.items, indexOfItem, newValue)
+        </p>
+        <hr>
+        <p>Vue监听对象的变化</p>
+        <p v-for="(val,key,index) in obj">{{index+1}}:{{key}}--{{val}}</p>
+        <p>对象修改：增删改。增删vue无法监听，修改可以监听。</p>
+        <p>对象的新增属性：vm.$set(obj,key,val)</p>
+        <p>对象的删除属性：Vue.delet(obj,key)</p>
+
+        <hr>
+        <p>过滤和排序</p>
+        <p v-for="book in booksFiter">{{book.name}}{{book.author}}</p>
+        <p>以下是排序</p>
+        <p v-for="book in booksSort">{{book.name}}{{book.author}}</p>
+        <hr>
+        <p>绑定事件</p>
+        <button @click="handlerClick(1,$event)">click</button>
+        <a href="./index.html" @click="handlerA('./index.html',$event)">./index.html</a>
+        <form>
+            <!-- 将input控件的数据传输到服务端，那么需要将它们包含在form中。 -->
+             <!-- get方式，内容将在浏览器的地址栏中显示出来。 -->
+            <input type="text" @keyup="sumbit" name="user">
+            <input type="hidden">
+            <!-- 隐藏输入框 -->
+        </form>
+        
+    </div>
+    <script src="./js/vue.js"></script>
+    <script>
+        let vm=new Vue({
+            el:'#app',
+            data:{
+                arr1:[1,2,3,4,5],
+                //替换： arr1[1]=4 不可以  arr1.splice(2,1,5)可以
+                arr2:[
+                    {
+                        name:'iphone 10',
+                        price:3999
+                    },
+                    {
+                        name:'iphone 11',
+                        price:3999
+                    },
+                    {
+                        name:'mi 10',
+                        price:3999
+                    },
+                ],
+                books:[
+                    {name:'HTML',author:'AAA'},
+                    {name:'CSS',author:'BBB'},
+                    {name:'JS',author:'CCC'},
+                    {name:'VUE',author:'YouYuXi'},
+
+                ],
+                obj:{
+                        name:'mi 10',
+                        price:3999
+             }
+              
+            },
+            computed: {
+                booksFiter:function(){
+                    // 过滤
+                    return this.books.filter(book=>{
+                        return book.name.match(/VUE/);
+                    })
+                },
+                booksSort:function(){
+                    // return this.books.sort()
+                    return this.books.sort(function(a,b){
+                       return a.name.length-b.name.length
+                    })
+                }
+            },
+            methods: {
+                handlerClick(num,e){
+                    console.log(num,e);
+                    // click默认将原生事件对象event传入
+                },
+                handlerA(target,e){
+                    console.log(target);
+                    event.preventDefault()
+                },
+                sumbit(){
+
+                }
+
+            },
+        })
+    </script>
+</body>
+</html>

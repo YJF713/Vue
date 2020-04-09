@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>表单form</title>
+</head>
+<body>
+    <div id="app">
+        <p>v-model的使用</p>
+        <p>{{msg1}}</p>
+        <input type="text" @input="inputHandler">
+        <!-- 输入汉字时情况 -->
+        <br>
+        <input type="text" v-model="msg1">
+        <p>{{msg2}}</p>
+        <textarea v-model="msg2"></textarea>
+        <hr>
+        <p>单选框</p>
+        <span>性别：</span>
+        <label>男</label>
+        <input type="radio" value="male"  v-model="sex">
+        <label>女</label>
+        <input type="radio" value="female" v-model="sex">
+        <label>保密</label>
+        <input type="radio" value="none" v-model="sex">
+        <span>你的性别是：{{sex}}</span>
+        <hr>
+        <p>多选框</p>
+        <span>爱好：</span>
+        <label>唱</label>
+        <input type="checkbox" value="sing" v-model="check">
+        <label>跳</label>
+        <input type="checkbox" value="dance" v-model="check">
+        <label>rap</label>
+        <input type="checkbox" value="rap" v-model="check">
+        <label>打篮球</label>
+        <input type="checkbox" value="basketball" v-model="check">
+        <span>你的爱好是：{{check}}</span>
+        <hr>
+        <p>下拉选择器</p>
+        <span>收获地址：</span>
+        <select v-model="location">
+            <option value="1">京</option>
+            <option value="2">津</option>
+            <option value="3">沪</option>
+            <option value="4">渝</option>
+        </select>
+        <p>收获地址：{{location}}</p>
+
+        <span>选课：</span>
+        <!-- multiple实现多选 shift 连选 ctrl 多选-->
+        <!-- <select v-model="lessons" multiple>
+            <option value="1">vue</option>
+            <option value="2">html</option>
+            <option value="3">js</option>
+            <option value="4">css</option>
+        </select>
+        <p>所选课程：{{lessons}}</p> -->
+        <span>选课：</span>
+        <select v-model="lessons" multiple>
+            <option v-for="(item,index) in lessonArr" :value="item.value">
+                {{item.text}}
+            </option>
+        </select>
+        <p>所选课程：{{lessons}}</p>
+    </div>
+    <script src="./js/vue.js"></script>
+    <script>
+        let vm=new Vue({
+            el:'#app',
+            data:{
+                msg1:'',
+                msg2:'',
+                sex:'none',
+                check:['rap'],
+                location:'3',
+                lessons:[],
+                lessonArr:[
+                    {
+                        text:'html',
+                        value:1
+                    },
+                    {
+                        text:'css',
+                        value:2
+                    },
+                    {
+                        text:'js',
+                        value:3
+                    },
+                    {
+                        text:'vue',
+                        value:4
+                    }
+                    
+
+                ]
+
+            },
+            methods: {
+                inputHandler(e){
+                    this.msg1=e.target.value;
+                }
+            },
+        })
+    </script>
+</body>
+</html>

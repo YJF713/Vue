@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <div id="app">
+        <yjf :prop-a="666" prop-b="test" :prop-d="11"
+        :prop-e="[666,777]" prop-f="12"></yjf>
+    </div>
+    <script src="./js/vue.js"></script>
+    <script>
+        let vm=new Vue({
+            el:'#app',
+            data:function(){
+                return{
+                    
+                }
+            },
+           components:{
+                yjf:{
+                    // 组件只能有一个根元素
+                    template:
+                    `
+                    <div>
+                        <p>propA:{{propA}}</p>
+                        <p>propB:{{propB}}</p>
+                        <p>propC:{{propC}}</p>
+                        <p>propD:{{propD}}</p>
+                        <p>propE:{{propE}}</p>
+                        <p>propF:{{propF}}</p>
+                    </div>
+                    `,
+                    props:{
+                        propA:Number,
+                        propB:[Number,String],
+                        propC:{
+                            type:Boolean,
+                            // 默认值
+                            default:true
+                        },
+                        propD:{
+                            type:Number,
+                            // 必填项
+                            required:true
+                         },
+                         propE:{
+                             type:Array,
+                             default:function(){
+                                 return[]
+                             }
+                         },
+                        propF:{
+                            validator:function(val){
+                                return val>10
+                            }
+                        }
+                    }
+                }
+           }     
+            
+        })
+    </script>
+</body>
+</html>

@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>props数据传值</title>
+</head>
+<body>
+    <div id="app">
+        <h1>使用props实现父组件向组件传值</h1>
+        <yjf info="hello" msg="666" :msg1="[1,2,3,4]"
+        :msg2="time" :msg3="num"></yjf>
+        <p><mark>{{num}}</mark></p>
+        <hr>
+        <p>单向数据流：父组件的数据传给子组件后，子组件只能用，不能改/</p>
+    </div>
+    <script src="./js/vue.js"></script>
+    <script>
+        let vm=new Vue({
+            el:'#app',
+            data:function(){
+                return{
+                    time:'09:18',
+                    num:6
+                }
+            },
+            components:{
+                yjf:{
+                    template:
+                    `
+                        <div>
+                            <p>我是一个组件,父组件的数据是：{{info}}/{{msg}}</p>
+                            <p>{{msg1[0]}}</p>
+                            <p>{{msg2}}</p>
+                            <p>{{msg3}}</p>
+                            <p>-------------------{{newMsg3}}----------------</p>
+                            <p>==================={{newerMsg3=================p>
+                            <p>这个数据来自组件的data：{{tip}}</p>
+                            <input v-model="msg3">
+                        </div>
+                    `,
+                    props:['info','msg','msg1','msg2','msg3'],
+                        data(){
+                            return{
+                                tip:'666',
+                                newMsg3:this.msg3
+                            }
+                        },
+                        beforeMount() {
+                            this.newMsg3=this.newMsg3+6
+                        },
+                         computed: {
+                            newerMsg3:function(){
+                                return this.msg3*2
+                            }
+                        },
+                }
+            }
+                
+            
+        })
+    </script>
+</body>
+</html>

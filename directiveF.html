@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>自定义指令</title>
+</head>
+<body>
+    <div id="app">
+        <h1>自定义指令</h1>
+        <input type="text" v-focus>
+        <h2 v-detail:qwer.yanjunfeng.yansan="colorVal"></h2>
+        <div v-demo="{color:colorVal,text:'hello'}"></div>
+        <input type="text" v-model="colorVal">
+    </div>
+    <script src="./js/vue.js"></script>
+    <script>
+        let vm=new Vue({
+            el:'#app',
+            data:{
+                colorVal:'red'
+            },
+            // 局部注册
+            directives:{
+                focus:{
+                    // 功能：使绑定的元素获取光标
+                    inserted:function(el){
+                        el.focus(); // 聚焦元素
+                    }
+                },
+                detail:{
+                    // 功能：展示自定义指令的内部情况
+                    bind:function(el,binding,vnode){
+                        let str=JSON.stringify;
+                        // 转换成字符串
+                        el.innerHTML=
+                        `
+                        el:el<br>
+                        name:${str(binding.name)}<br>
+                        value:${str(binding.value)}<br>
+                        expression:${str(binding.expression)}<br>
+                        argument:${str(binding.arg)}<br>
+                        modifiers:${str(binding.modifiers)}<br>
+                        vnode:${Object.keys(vnode).join(',')}
+                        +++${binding.value}
+                        `
+                    }
+                },
+                demo:{
+                    bind:function(el,binding,vnode){
+                        console.log(el)
+                        console.log(11,binding);
+                        console.log(11,vnode);
+                    },
+                    update:function(el,binding,vnode){
+                        console.log(22,binding);
+                        console.log(22,vnode);
+                    },
+                }
+            }
+        })
+    </script>
+</body>
+</html>
